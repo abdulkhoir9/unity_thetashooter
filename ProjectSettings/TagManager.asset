@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Floor
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Mask
+  - BehindMask
+  - Walls
+  - Dark
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 125411751
+    locked: 0
+  - name: Obstacle
+    uniqueID: 4112081147
+    locked: 0
+  - name: Bullet
+    uniqueID: 4051286505
+    locked: 0
+  - name: Player
+    uniqueID: 2237392029
+    locked: 0
+  - name: Enemy
+    uniqueID: 1510507383
+    locked: 0
+  - name: PlayerVision
+    uniqueID: 2583230023
+    locked: 0
