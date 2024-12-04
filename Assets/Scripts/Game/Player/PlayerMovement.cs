@@ -55,17 +55,14 @@ public class PlayerMovement : MonoBehaviour
         if (transform.GetComponent<PlayerShoot>()._fireContinuously)
         {
             _rigidbody.velocity = _smoothedMovementInput * (_speed / 3);
-            //Debug.Log("velocity (" + _rigidbody.velocity + ") = smoothedMovementInput (" + _smoothedMovementInput + ") + speed (" + _speed / 4 + ")");
         }
         else if(movementDirection < 0)
         {
             _rigidbody.velocity = _smoothedMovementInput * (_speed / 2);
-            //Debug.Log("velocity (" + _rigidbody.velocity + ") = smoothedMovementInput (" + _smoothedMovementInput + ") + speed (" + _speed / 3 + ")");
         }
         else 
         {
             _rigidbody.velocity = _smoothedMovementInput * _speed;
-            //Debug.Log("velocity (" + _rigidbody.velocity + ") = smoothedMovementInput (" + _smoothedMovementInput + ") + speed (" + _speed + ")");
         }
         
         PreventPlayerGoingOffscreen();  
@@ -89,13 +86,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void RotateInDirectionOfInput()
     {
-        //if(_movementInput != Vector2.zero)
-        //{
-        //    Quaternion targetRotation = Quaternion.LookRotation(transform.forward, _smoothedMovementInput);
-        //    Quaternion rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
-        
-        //    _rigidbody.MoveRotation(rotation);
-        //}
         Vector2 lookDirection = _mousePosition - _rigidbody.position;
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
         _rigidbody.rotation = angle;

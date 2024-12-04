@@ -113,7 +113,6 @@ public class Pathfinding
         int gridWidth = grid.GetLength(0);
         int gridHeight = grid.GetLength(1);
 
-        //Debug.Log(x + ", " + y + " | gridWidth = " + gridWidth + ", gridHeight = " + gridHeight);
         // Check up
         if (y < gridHeight - 1)
             neighbors.Add(grid[x, y + 1]);
@@ -149,14 +148,6 @@ public class Pathfinding
         if (x < gridWidth - 1 && y > 0)
             if (grid[x + 1, y].walkable || grid[x, y - 1].walkable)
                 neighbors.Add(grid[x + 1, y - 1]);
-        
-
-        //string neighborList = "neighbors = ";
-        //foreach (var neighbor in neighbors)
-        //{
-        //    neighborList += "(" + neighbor.x + ", " + neighbor.y + "), ";
-        //}
-        //Debug.Log(neighborList);
 
         return neighbors;
     }

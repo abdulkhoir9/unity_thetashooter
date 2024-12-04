@@ -14,13 +14,7 @@ public class EnemyMovementDebug : EnemyMovement
         _grid = GridMap.grid;
     }
 
-    protected override void FixedUpdate()
-    {
-        //if (_currentPath != null && _currentPath.Count > 0)
-        //{
-        //    FollowPath(_currentPath);
-        //}
-    }
+    protected override void FixedUpdate() { }
 
     protected override void Update()
     {
@@ -64,20 +58,8 @@ public class EnemyMovementDebug : EnemyMovement
             // Find the path
             _currentPath = Pathfinding.FindPathDebug(_grid, enemyGridPosition, playerGridPosition);
 
-            //// Calculate time without debug method
-            //Stopwatch stopwatch = new Stopwatch();
-            //stopwatch.Start();
-            //Pathfinding.FindPath(_grid, enemyGridPosition, playerGridPosition);
-            //stopwatch.Stop();
-            //UnityEngine.Debug.Log($"Execution time: {stopwatch.Elapsed.TotalMilliseconds}");
-
             if (_currentPath == null)
                 return;
-
-            //if (_currentPath != null && _currentPath.Count > 0)
-            //{
-            //    FollowPath(_currentPath);
-            //}
         }
     }
 
@@ -98,7 +80,7 @@ public class EnemyMovementDebug : EnemyMovement
 
         // Obstacle avoidance for the A* algorithm
         // If only one adjacent node is an obstacle, temporarily move horizontally or vertically.
-        if (HasOneSharedAdjacentObstacle(currentNode, nextNodeOnGrid) && GridMap.IsDiagonal(currentNode, nextNodeOnGrid) /*&& (int)Vector2.Distance(transform.position, targetPosition) == 1*/)
+        if (HasOneSharedAdjacentObstacle(currentNode, nextNodeOnGrid) && GridMap.IsDiagonal(currentNode, nextNodeOnGrid))
         {
 
             // Move towards the target in either the horizontal or vertical direction.

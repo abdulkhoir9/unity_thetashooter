@@ -29,9 +29,6 @@ public class GridMap : MonoBehaviour
 
         Node[,] gridMap = new Node[gridWidth, gridHeight]; // Assign a new 2d Node array with size matching the width and height of the tilemap
 
-        // -----DEBUG CODE----------DEBUG CODE----------DEBUG CODE-----
-        //Debug.Log("width = " + gridWidth + ", height = " + gridHeight + "\n");
-
         // The following for loop assigns the position for each nodes
         for (int x = 0; x < gridWidth; x++)
         {
@@ -49,11 +46,6 @@ public class GridMap : MonoBehaviour
                 float centerY = y * cellSize.y + cellSize.y / 2f;
 
                 gridMap[x, y] = new Node(centerX, centerY, isWalkable);
-                //SetNodePositionOnGrid(grid[x, y]);
-
-                // -----DEBUG CODE----------DEBUG CODE----------DEBUG CODE-----
-                //Vector2 pos = GridToWorldPosition(gridMap[x, y]);
-                //Debug.Log(x + ", " + y + " (" + (pos.x) + ", " + (pos.y) + ") = " + gridMap[x, y].walkable);
             }
         }
 

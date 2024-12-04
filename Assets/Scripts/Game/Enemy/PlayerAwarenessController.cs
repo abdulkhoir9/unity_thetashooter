@@ -6,7 +6,6 @@ public class PlayerAwarenessController : MonoBehaviour
 {
     public bool AwareOfPlayer;
 
-    //public Vector2 DirectionToPlayer;
     public Vector2 enemyToPlayerVector;
 
     [SerializeField]
@@ -31,7 +30,6 @@ public class PlayerAwarenessController : MonoBehaviour
         } 
 
         enemyToPlayerVector = _player.position - transform.position;
-        //DirectionToPlayer = enemyToPlayerVector.normalized;
 
         if(enemyToPlayerVector.magnitude <= _playerAwarenessDistance)
         {

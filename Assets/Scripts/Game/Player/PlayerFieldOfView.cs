@@ -42,15 +42,12 @@ public class PlayerFieldOfView : MonoBehaviour
             if (raycastHit2D.collider == null)
             {
                 vertex = _origin + (GetVectorFromAngle(angle) * viewDistance);
-                //Debug.Log("you didn't hit anything");
             }
             else
             {
                 vertex = raycastHit2D.point;
-                //Debug.Log("you hit something at (" + vertex + ")");
             }
 
-            //Debug.Log(vertex);
             vertices[vertexIndex] = vertex;
 
             if (i > 0)

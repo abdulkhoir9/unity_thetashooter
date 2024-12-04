@@ -72,7 +72,6 @@ public class PlayerShoot : Shoot
         _isReloading = true;
         AudioManager.instance.PlaySFX("Reload");
         OnBulletCountChanged.Invoke();
-        //Debug.LogError("Reloading...");
 
         yield return new WaitForSeconds(_reloadTime);
         _bulletCount = _maxBulletCount;

@@ -25,7 +25,6 @@ public class Shoot : MonoBehaviour
 
     public int _bulletCount;
     public string _sfx;
-    //public bool _fireContinuously;
     protected float _lastFireTime;
 
     [HideInInspector]
@@ -33,10 +32,6 @@ public class Shoot : MonoBehaviour
 
     protected void FireBullet()
     {
-        //Debug.LogWarning(_bulletCount);
-        //_bulletCount--;
-        //Debug.Log(_bulletCount);
-        //OnBulletCountChanged.Invoke();
         GameObject bullet = Instantiate(_bulletPrefab, _firePoint.position, transform.rotation);
         AudioManager.instance.PlaySFX(_sfx);
 
@@ -47,11 +42,6 @@ public class Shoot : MonoBehaviour
         rigidbody.velocity = _bulletSpeed * transform.up;
     }
 
-    //private void OnFire(InputValue inputValue)
-    //{
-    //    _fireContinuously = inputValue.isPressed;
-    //}
-
     protected virtual void UpdateBulletCount()
     {
         _bulletCount--;
@@ -60,7 +50,6 @@ public class Shoot : MonoBehaviour
     protected virtual IEnumerator Reload()
     {
         _isReloading = true;
-        //Debug.LogError("Reloading...");
 
         yield return new WaitForSeconds(_reloadTime);
         _bulletCount = _maxBulletCount;

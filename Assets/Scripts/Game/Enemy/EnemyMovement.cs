@@ -33,7 +33,6 @@ public class EnemyMovement : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _playerAwarenessController = GetComponent<PlayerAwarenessController>();
-        //_player = _playerAwarenessController.getPlayer();
 
         IsDamaged = false;
     }
@@ -41,38 +40,7 @@ public class EnemyMovement : MonoBehaviour
     protected virtual void Start()
     {
         _lastPlayerPosition = _player.position;
-
-        //Tilemap[] tilemaps = FindObjectsOfType<Tilemap>();
-        //foreach (Tilemap tilemap in tilemaps)
-        //{
-        //    if (tilemap.gameObject.CompareTag("Floor"))
-        //    {
-        //        _gridMap = tilemap.GetComponent<GridMap>();
-        //        _grid = GridMap.grid;
-        //        //minX = tilemap.cellBounds.xMin;
-        //        //minY = tilemap.cellBounds.yMin;
-        //        //Debug.Log("minX, minY = " + minX + ", " + minY);
-
-        //        break;
-        //    }
-        //}
         _grid = GridMap.grid;
-
-        //Node enemyGridPosition = _gridMap.GetNodeAtPosition(10, 13);
-        //Node playerGridPosition = _gridMap.GetNodeAtPosition(11, 13);
-        //Debug.Log("Sus FindPath... enemyGridPosition = (" + enemyGridPosition.x + ", " + enemyGridPosition.y + ") | playerGridPosition = " + playerGridPosition.x + ", " + playerGridPosition.y + ")");
-        //_currentPath = Pathfinding.FindPath(_grid, enemyGridPosition, playerGridPosition);
-        //int pathLength = _currentPath.Count;
-        //Debug.LogWarning("--------------");
-        //string nodeList = "1 - path found (" + pathLength + ") = ";
-        //foreach (var node in _currentPath)
-        //{
-        //    nodeList += "(" + node.x + ", " + node.y + "), ";
-        //}
-        //Debug.Log(nodeList);
-
-        //Debug.LogError("STOOOOOOOOOOOOOOOOOOOOOOOOPPPPPPPPPPPPPPPPP!!!!!!!!!!!!");
-        //Debug.Break();
 
         StartCoroutine(RecalculatePathPeriodically());
         CalculatePath();
@@ -115,7 +83,6 @@ public class EnemyMovement : MonoBehaviour
         {
             Vector2 targetPosition = GridMap.GridToWorldPosition(nextNode);
             _targetDirection = new Vector2((targetPosition.x) - transform.position.x, (targetPosition.y) - transform.position.y).normalized;
-            //Debug.Log("nextNode (" + nextNode.x + ", " + nextNode.y + "), transformPosition = (" + transform.position.x + ", " + transform.position.y + ") | target direction = " + _targetDirection);
         }
         else
         {
@@ -145,18 +112,8 @@ public class EnemyMovement : MonoBehaviour
         Node playerGridPosition = GridMap.WorldToGridPosition(_player.position);
 
         // Find the path
-        //Debug.Log("Sus FindPath... enemyGridPosition = (" + enemyGridPosition.x + ", " + enemyGridPosition.y + ") | playerGridPosition = " + playerGridPosition.x + ", " + playerGridPosition.y + ")");
         _currentPath = Pathfinding.FindPath(_grid, enemyGridPosition, playerGridPosition);
-        //int pathLength = _currentPath.Count;
-        //Debug.LogWarning("--------------");
-        //string nodeList = "1 - path found (" + pathLength + ") = ";
-        //foreach (var node in _currentPath)
-        //{
-        //    nodeList += "(" + node.x + ", " + node.y + "), ";
-        //}
-        //Debug.Log(nodeList);
-        //// change the position of the node so that it corresponds to the enemy position, this prevents the enemy to go in unwanted direction first if it's a little far from the center of the tile
-        //Debug.Log("currentNode = " + GridMap.GetNodeAtPosition((int)enemyPosition.x, (int)enemyPosition.y).x + ", " + GridMap.GetNodeAtPosition((int)enemyPosition.x, (int)enemyPosition.y).y + " | currentPath[1] = " + _currentPath[1].x + ", " + _currentPath[1].y + " | HasLineOfSight: " + GridMap.HasLineOfSight(GridMap.GetNodeAtPosition((int)enemyPosition.x, (int)enemyPosition.y), _currentPath[1], _grid));
+        
         if (_currentPath.Count > 1)
         {
             if (GridMap.HasLineOfSight(GridMap.WorldToGridPosition((int)enemyPosition.x, (int)enemyPosition.y), _currentPath[1], _grid) && _currentPath.Count > 1)
@@ -169,20 +126,8 @@ public class EnemyMovement : MonoBehaviour
             _currentPath[_currentPath.Count - 1] = playerNode;
         }
 
-        //Debug.Log("currentPath[0] = " + _currentPath[0].x + ", " + _currentPath[0].y + " | enemyPosition");
-
         if (!IsDamaged && _currentPath != null && _currentPath.Count > 0)
         {
-            //UpdateTargetDirection();
-            //RotateTowardsTarget();
-            //pathLength = _currentPath.Count;
-            //nodeList = "2 - path found (" + pathLength + ") = ";
-            //foreach (var node in _currentPath)
-            //{
-            //    nodeList += "(" + node.x + ", " + node.y + "), ";
-            //}
-            //Debug.Log(nodeList);
-            //Debug.Break();
             FollowPath(_currentPath);
         }
     }
@@ -196,49 +141,32 @@ public class EnemyMovement : MonoBehaviour
 
         // Get the next node in the path.
         Node nextNode = path[0];
-        //Debug.Log("next node = " +  nextNode.xOnGrid + ", " + nextNode.yOnGrid);
         
         Vector2 targetPosition = GridMap.GridToWorldPosition(nextNode);
 
         Node nextNodeOnGrid = GridMap.WorldToGridPosition((int) nextNode.x, (int) nextNode.y);
         Node currentNode = GridMap.WorldToGridPosition(transform.position);
-        //int x = (int)currentNode.x;
-        //int y = (int)currentNode.y;
 
         // Obstacle avoidance for the A* algorithm
-        //Debug.Log("currentNode = (" + currentNode.x + ", " + currentNode.y + ") | nextNode = (" + nextNode.x + ", " + nextNode.y + ") | HasOneAdjacentObstacle = " + HasOneSharedAdjacentObstacle(currentNode, nextNodeOnGrid) + ", IsDiagonal = " + GridMap.IsDiagonal(currentNode, nextNode) + ", Distance = " + (int)Vector2.Distance(transform.position, targetPosition));
         // If only one adjacent node is an obstacle, temporarily move horizontally or vertically.
-        if (HasOneSharedAdjacentObstacle(currentNode, nextNodeOnGrid) && GridMap.IsDiagonal(currentNode, nextNodeOnGrid) /*&& (int)Vector2.Distance(transform.position, targetPosition) == 1*/)
+        if (HasOneSharedAdjacentObstacle(currentNode, nextNodeOnGrid) && GridMap.IsDiagonal(currentNode, nextNodeOnGrid))
         {
-            
             // Move towards the target in either the horizontal or vertical direction.
             Dictionary<string, Node> sharedAdjacentNodes = GetSharedAdjacentNodes(currentNode, nextNodeOnGrid);
             if (sharedAdjacentNodes["horizontal"].walkable && !path.Contains(sharedAdjacentNodes["horizontal"]))
             {
-                //Debug.Log("Inserted sharedAdjacentNodes[horizontal] (" + sharedAdjacentNodes["horizontal"].x + ", " + sharedAdjacentNodes["horizontal"].y + ")");
-
                 path.Insert(0, sharedAdjacentNodes["horizontal"]);
                 nextNode = path[0];
             }
             else if (sharedAdjacentNodes["vertical"].walkable && !path.Contains(sharedAdjacentNodes["vertical"]))
             {
-                //Debug.Log("Inserted sharedAdjacentNodes[vertical] (" + sharedAdjacentNodes["vertical"].x + ", " + sharedAdjacentNodes["vertical"].y + ")");
-
                 path.Insert(0, sharedAdjacentNodes["vertical"]);
                 nextNode = path[0];
 
             }
-            //int pathLength = path.Count;
-            //string nodeList = "1 - path found (" + pathLength + ") = ";
-            //foreach (var node in path)
-            //{
-            //    nodeList += "(" + node.x + ", " + node.y + "), ";
-            //}
-            //Debug.Log(nodeList);
         }
 
         // Calculate the direction to the next node.
-        //Debug.Log("nextNode = " + nextNode.x + ", " + nextNode.y);
         UpdateTargetDirection(nextNode);
         RotateTowardsTarget();
 
@@ -249,15 +177,7 @@ public class EnemyMovement : MonoBehaviour
         if (Vector2.Distance(transform.position, targetPosition) < 0.1f)
         {
             _rigidbody.velocity = Vector2.zero;
-            //Debug.Log("node (" + nextNode.x + ", " + nextNode.y + ") reached, removing node...");
             path.RemoveAt(0);
-            //int pathLength = path.Count;
-            //string nodeList = "currentNode = (" + currentNode.x + ", " + currentNode.y + ") | currentPath (" + pathLength + ") = ";
-            //foreach (var node in path)
-            //{
-            //    nodeList += "(" + node.x + ", " + node.y + "), ";
-            //}
-            //Debug.Log(nodeList);
         }
     }
 
